@@ -6,28 +6,23 @@
         <div class="md-title">Serasa</div>
         <div class="md-body-1">New Developers Program</div>
       </div>
-
       <div class="form">
         <md-field>
           <label>CNPJ</label>
           <md-input v-model="login.cnpj" autofocus></md-input>
         </md-field>
-
         <md-field md-has-password>
           <label>Password</label>
           <md-input v-model="login.password" type="password"></md-input>
         </md-field>
       </div>
-
       <div class="actions md-layout md-alignment-center-space-between">
         <a href="/register">Register</a>
         <md-button class="md-raised md-primary" @click="auth">Log in</md-button>
       </div>
-      
       <div class="loading-overlay" v-if="loading">
         <md-progress-spinner md-mode="indeterminate" :md-stroke="2"></md-progress-spinner>
       </div>
-
     </md-content>
     <div class="background" />
   </div>
