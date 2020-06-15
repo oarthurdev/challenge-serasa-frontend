@@ -45,6 +45,7 @@ export default {
   },
   methods: {
     auth () {
+      const self = this
       this.loading = true
       setTimeout(() => {
         this.loading = false
@@ -55,7 +56,7 @@ export default {
       axios.post('/auth/login', { cnpj: this.login.cnpj, password: encryptedPassword }).then(function (res) {
         if (res.data.auth) {
           console.log('Autenticado!!')
-          localStorage.setItem('token', res.token)
+          localStorage.setItem('token', res.data.token)
           self.$router.push('/dashboard')
         } else {
           console.log('Ooops, try again.')
