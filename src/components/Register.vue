@@ -4,31 +4,37 @@
       <div class="title">
         <img src="@/assets/serasa-logo.png" width="200" height="200" id="logo">
         <div class="md-title">Serasa</div>
-        <div class="md-body-1">New Developers Program</div>
+        <div class="md-body-1">Register Company</div>
       </div>
-
       <div class="form">
+        <md-field>
+          <label>Name</label>
+          <md-input v-model="login.name" autofocus></md-input>
+        </md-field>
         <md-field>
           <label>CNPJ</label>
           <md-input v-model="login.cnpj" autofocus></md-input>
         </md-field>
-
         <md-field md-has-password>
           <label>Password</label>
           <md-input v-model="login.password" type="password"></md-input>
         </md-field>
       </div>
-
+      <div class="actions md-layout md-alignment-center-space-between">
+        <router-link to="login">Login</router-link>
+        <md-button class="md-raised md-primary" @click="register">Register</md-button>
+      </div>
       <div class="loading-overlay" v-if="loading">
         <md-progress-spinner md-mode="indeterminate" :md-stroke="2"></md-progress-spinner>
       </div>
-
     </md-content>
     <div class="background" />
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'App',
   data () {
@@ -36,18 +42,25 @@ export default {
       loading: false,
       login: {
         cnpj: '',
-        password: ''
+        password: '',
+        name: ''
       }
     }
   },
   methods: {
-    auth () {
-      // your code to login user
-      // this is only for example of loading
+    register () {
       this.loading = true
       setTimeout(() => {
         this.loading = false
       }, 5000)
+
+      axios.post('auth/register', { cnpj: this.login.cnpj, password: this.login.password, name: this.login.name }).then(function (res) {
+        if (res.data) {
+          console.log('Empresa inserida no banco de dados.')
+        } else {
+          console.log('Ooops, try again.')
+        }
+      })
     }
   }
 }

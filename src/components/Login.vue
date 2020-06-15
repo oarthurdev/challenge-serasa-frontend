@@ -17,7 +17,7 @@
         </md-field>
       </div>
       <div class="actions md-layout md-alignment-center-space-between">
-        <a href="/register">Register</a>
+        <router-link to="register">Register</router-link>
         <md-button class="md-raised md-primary" @click="auth">Log in</md-button>
       </div>
       <div class="loading-overlay" v-if="loading">
@@ -29,6 +29,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+const md5 = require('md5')
+
 export default {
   name: 'App',
   data () {
@@ -46,6 +49,18 @@ export default {
       setTimeout(() => {
         this.loading = false
       }, 5000)
+
+      const encryptedPassword = md5(this.login.password)
+
+      axios.post('/auth/login', { cnpj: this.login.cnpj, password: encryptedPassword }).then(function (res) {
+        if (res.data.auth) {
+          console.log('Autenticado!!')
+          localStorage.setItem('token', res.token)
+          self.$router.push('/dashboard')
+        } else {
+          console.log('Ooops, try again.')
+        }
+      })
     }
   }
 }
