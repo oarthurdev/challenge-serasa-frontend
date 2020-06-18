@@ -33,8 +33,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'App',
   data () {
@@ -54,7 +52,8 @@ export default {
         this.loading = false
       }, 5000)
 
-      axios.post('auth/register', { cnpj: this.login.cnpj, password: this.login.password, name: this.login.name }).then(function (res) {
+      this.$http.post('auth/register', { cnpj: this.login.cnpj, password: this.login.password, name: this.login.name }).then(function (res) {
+        console.log('teste')
         if (res.data) {
           console.log('Empresa inserida no banco de dados.')
         } else {

@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 const md5 = require('md5')
 
 export default {
@@ -53,7 +52,7 @@ export default {
 
       const encryptedPassword = md5(this.login.password)
 
-      axios.post('/auth/login', { cnpj: this.login.cnpj, password: encryptedPassword }).then(function (res) {
+      this.$http.post('/auth/login', { cnpj: this.login.cnpj, password: encryptedPassword }).then(function (res) {
         if (res.data.auth) {
           console.log('Autenticado!!')
           localStorage.setItem('token', res.data.token)
